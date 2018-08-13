@@ -25,7 +25,7 @@
   <th>Price</th>
   <th>Comments</th>
   <th>Status</th>
-  <% current_user.orders.each do |order| %>
+  <% current_user.orders.sort_by{|order| order.date_made}.reverse.each do |order| %>
     <tr>
       <td><%= order.number %></td>
       <td><%= order.name %></td>
