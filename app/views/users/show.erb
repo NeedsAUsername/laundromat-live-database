@@ -1,5 +1,37 @@
-Current Orders
 
+<h1>Create an order </h1>
+
+<form action="/orders" method="post">
+  <p>Number: <input type="text" name="order[number]" required></p>
+  <p>Weight: <input type="text" name="order[weight]" required></p>
+  <p>Price: <input type="text" name="order[price]" required></p>
+  <p>Date made: <input type="date" name="order[date_made]" value="<%= Date.today %>"</p>
+  <p>Comments: <input type="text" name="order[comments]" value="none"></p>
+  <input type="submit" value="create order">
+</form>
+
+<h1>Orders Waiting</h1>
+
+<% current_user.orders.each do |order| %>
+  <% if order.status == "waiting" %>
+  <p>Number <%= order.number %><p>
+  <form action="/orders/<%= order.id %>/clean" method="post">
+    machine: <input type="text" name="machine">
+    <input type="submit" value="clean">
+  </form>
+  <% end %>
+<% end %>
+
+<h1>Orders in washer</h1>
+<% current_user.orders.each do |order| %>
+  <% if order.status == "cleaning" %>
+  <p>Number <%= order.number %> is in machine <%= order.machine %><p>
+  <form action="/orders/<%= order.id %>/clean" method="post">
+    machine: <input type="text" name="machine">
+    <input type="submit" value="dry">
+  </form>
+  <% end %>
+<% end %>
 
 Orders Waiting For Pickup
 
