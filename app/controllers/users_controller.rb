@@ -38,6 +38,7 @@ class UsersController < ApplicationController
   get '/show' do
     if logged_in?
       @user = current_user
+      @statuses = ["accepted","cleaning", "drying", "waiting", "done"]
       erb :'users/show'
     else
       redirect '/login'

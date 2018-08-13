@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20180810005311) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "number"
+    t.string  "name"
     t.float   "weight"
     t.float   "price"
     t.date    "date_made"

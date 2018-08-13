@@ -1,39 +1,55 @@
 
+
+
 <h1>Create an order </h1>
 
 <form action="/orders" method="post">
   <p>Number: <input type="text" name="order[number]" required></p>
+  <p>Name: <input type="text" name="order[name]" required></p>
   <p>Weight: <input type="text" name="order[weight]" required></p>
   <p>Price: <input type="text" name="order[price]" required></p>
   <p>Date made: <input type="date" name="order[date_made]" value="<%= Date.today %>"</p>
-  <p>Comments: <input type="text" name="order[comments]" value="none"></p>
+  <p>Comments: <input type="text" name="order[comments]" placeholder="none"></p>
   <input type="submit" value="create order">
 </form>
 
-<h1>Orders Waiting</h1>
+<h1>Orders</h1>
 
-<% current_user.orders.each do |order| %>
-  <% if order.status == "waiting" %>
-  <p>Number <%= order.number %><p>
-  <form action="/orders/<%= order.id %>/clean" method="post">
-    machine: <input type="text" name="machine">
-    <input type="submit" value="clean">
-  </form>
+
+
+<table>
+  <th>Order Number</th>
+  <th>Customer Name</th>
+  <th>Date </th>
+  <th>Weight</th>
+  <th>Price</th>
+  <th>Comments</th>
+  <th>Status</th>
+  <% current_user.orders.each do |order| %>
+    <tr>
+      <td><%= order.number %></td>
+      <td><%= order.name %></td>
+      <td><%= order.date_made %></td>
+      <td><%= order.weight %></td>
+      <td><%= order.price %></td>
+      <td><%= order.comments %></td>
+      <td>
+        <form class="" action="/orders/<%=order.id%>/status" method="post">
+          <select name="status">
+            <% @statuses.each do |status| %>
+              <option
+                <% if order.status == status %>
+                  selected="selected"
+                <% end %>
+              value="<%= status %>"><%= status %>
+              </option>
+            <% end %>
+          </select>
+          <input type="submit" value="update">
+        </form>
+      </td>
+    </tr>
   <% end %>
-<% end %>
+</table>
 
-<h1>Orders in washer</h1>
-<% current_user.orders.each do |order| %>
-  <% if order.status == "cleaning" %>
-  <p>Number <%= order.number %> is in machine <%= order.machine %><p>
-  <form action="/orders/<%= order.id %>/clean" method="post">
-    machine: <input type="text" name="machine">
-    <input type="submit" value="dry">
-  </form>
-  <% end %>
-<% end %>
-
-Orders Waiting For Pickup
-
-
-Orders Picked Up
+<option value=""></option>
