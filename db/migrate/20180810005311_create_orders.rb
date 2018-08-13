@@ -2,6 +2,7 @@ class CreateOrders < ActiveRecord::Migration
   def change
     create_table :orders do |t|
       t.integer :number
+      t.string :name
       t.float :weight
       t.float :price
       t.date :date_made
